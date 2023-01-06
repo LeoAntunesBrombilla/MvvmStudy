@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MvvmStudy</string>
+    <string name="list">lista</string>
 </resources>
