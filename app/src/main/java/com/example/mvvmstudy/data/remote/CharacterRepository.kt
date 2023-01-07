@@ -6,7 +6,7 @@ import retrofit2.Call
 class CharacterRepository(private val retrofitClient: RetrofitClient) : ICharacterRepository {
 
 
-    override fun getCharacters(): Call<List<CharacterResponseDTO>> {
+    override fun getCharacters(): Call<CharacterResponseDTO> {
         return retrofitClient.getCharacterApi().getCharacters()
     }
 

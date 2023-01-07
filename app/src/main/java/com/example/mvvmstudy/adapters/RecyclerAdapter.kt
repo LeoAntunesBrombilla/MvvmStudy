@@ -35,7 +35,7 @@ class RecyclerAdapter(private val characters: LiveData<List<CharacterResponseDTO
 
     inner class CharacterViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
         fun bind(character: CharacterResponseDTO) {
-            binding.findViewById<TextView>(R.id.characterName).text = character.name
+            binding.findViewById<TextView>(R.id.characterName).text = character.results[1].name
         }
     }
 

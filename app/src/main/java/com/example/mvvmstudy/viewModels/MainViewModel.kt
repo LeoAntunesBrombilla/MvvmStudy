@@ -15,7 +15,7 @@ class MainViewModel(private val service: CharacterService) : ViewModel() {
     fun loadCharacters() {
         service.getCharacters { characters ->
             Log.i("MainViewModel", "Characters")
-            _characters.value = characters
+            _characters.value = listOf(characters)
         }
     }
 

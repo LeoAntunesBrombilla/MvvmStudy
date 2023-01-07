@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface ICharacterRepository {
 
-    @GET("/people")
-    fun getCharacters(): Call<List<CharacterResponseDTO>>
+    @GET("people")
+    fun getCharacters(): Call<CharacterResponseDTO>
 }
