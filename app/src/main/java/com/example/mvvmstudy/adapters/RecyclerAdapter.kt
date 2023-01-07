@@ -1,33 +1,36 @@
 package com.example.mvvmstudy.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmstudy.R
 import com.example.mvvmstudy.data.remote.characterDTO.CharacterResponseDTO
-import com.example.mvvmstudy.viewModels.MainViewModel
 
-class RecyclerAdapter (val viewModel: MainViewModel, val list: ArrayList<CharacterResponseDTO>, val context: Context):
+class RecyclerAdapter(private val characters: LiveData<List<CharacterResponseDTO>>) :
     RecyclerView.Adapter<RecyclerAdapter.CharacterViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.CharacterViewHolder {
-        val root = LayoutInflater.from(parent.context).inflate(R.layout.character, parent, false)
-        return CharacterViewHolder(root)
+
+    private val characterList = mutableListOf<CharacterResponseDTO>()
+
+    init {
+        characters.observeForever {
+            characterList.clear()
+            characterList.addAll(it)
+            notifyDataSetChanged()
+        }
     }
 
-    override fun getItemCount(): Int {
-        if(list.size == 0) {
-            Toast.makeText(context, "Sem Personagens", Toast.LENGTH_LONG).show()
-        }
-        return list.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.CharacterViewHolder{
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.character , parent, false)
+        return CharacterViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerAdapter.CharacterViewHolder, position: Int) {
-        holder.bind(list.get(position))
+        val character = characterList[position]
+        holder.bind(character)
     }
 
     inner class CharacterViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
@@ -36,5 +39,8 @@ class RecyclerAdapter (val viewModel: MainViewModel, val list: ArrayList<Charact
         }
     }
 
+    override fun getItemCount(): Int {
+        return characterList.size
+    }
 
 }
