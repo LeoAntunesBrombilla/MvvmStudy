@@ -1,5 +1,6 @@
 package com.example.mvvmstudy.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmstudy.R
+import com.example.mvvmstudy.data.remote.characterDTO.CharacterDTO
 import com.example.mvvmstudy.data.remote.characterDTO.CharacterResponseDTO
 
 class RecyclerAdapter(private val characters: LiveData<List<CharacterResponseDTO>>) :
@@ -24,18 +26,22 @@ class RecyclerAdapter(private val characters: LiveData<List<CharacterResponseDTO
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.CharacterViewHolder{
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.character , parent, false)
-        return CharacterViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = inflater.inflate(R.layout.character, parent, false)
+        return CharacterViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerAdapter.CharacterViewHolder, position: Int) {
-        val character = characterList[position]
-        holder.bind(character)
+        holder.bind(characterList[position])
     }
 
     inner class CharacterViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
-        fun bind(character: CharacterResponseDTO) {
-            binding.findViewById<TextView>(R.id.characterName).text = character.results[1].name
+        fun bind(characterResponse: CharacterResponseDTO) {
+            val characters = characterResponse.results
+            for (character in characters) {
+                val name = character.name
+                binding.findViewById<TextView>(R.id.characterName).text = name
+            }
         }
     }
 

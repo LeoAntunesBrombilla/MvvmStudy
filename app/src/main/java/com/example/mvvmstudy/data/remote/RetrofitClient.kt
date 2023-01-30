@@ -10,7 +10,7 @@ class RetrofitClient {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    fun getCharacterApi(): ICharacterRepository {
+    fun getCharactersApi(): ICharacterRepository {
         return retrofit.create(ICharacterRepository::class.java)
     }
 }

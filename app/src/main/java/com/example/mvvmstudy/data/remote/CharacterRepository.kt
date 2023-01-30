@@ -7,7 +7,7 @@ class CharacterRepository(private val retrofitClient: RetrofitClient) : ICharact
 
 
     override fun getCharacters(): Call<CharacterResponseDTO> {
-        return retrofitClient.getCharacterApi().getCharacters()
+        return retrofitClient.getCharactersApi().getCharacters()
     }
 
 }
